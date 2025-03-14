@@ -41,6 +41,7 @@ import com.google.devtools.build.android.aapt2.StaticLibrary;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -354,9 +355,10 @@ public class Aapt2ResourcePackagingAction {
       List<CompiledResources> compiledResourceDeps =
           // Last defined dependencies will overwrite previous one, so always place direct
           // after transitive.
-          concat(options.transitiveData.stream(), options.directData.stream())
-              .map(DependencyAndroidData::getCompiledSymbols)
-              .collect(toList());
+              concat(options.directData.stream(), options.transitiveData.stream())
+                      .map(DependencyAndroidData::getCompiledSymbols)
+                      .collect(toList());
+      Collections.reverse(compiledResourceDeps);
 
       // NB: "-A" options are in *decreasing* precedence, while "-R" options are in *increasing*
       // precedence.  While this is internally inconsistent, it matches AAPTv1's treatment of "-A".
