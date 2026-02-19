@@ -80,11 +80,20 @@ maven.install(
         # protobuf runtimes.
         "com.google.protobuf:protobuf-java:4.33.4",
         "com.google.protobuf:protobuf-java-util:4.33.4",
+        # Pulling in a newer version here (to match rules_android_maven)
+        # prevents issues with JDK 21.
+        "org.ow2.asm:asm:9.6",
+        "org.ow2.asm:asm-commons:9.6",
+        "org.ow2.asm:asm-tree:9.6",
+        "org.ow2.asm:asm-util:9.6",
     ],
     repositories = [
         "https://maven.google.com",
         "https://repo1.maven.org/maven2",
     ],
+    # To generate, run:
+    # REPIN=1 bazelisk run --enable_bzlmod @android_ide_common_30_1_3//:pin
+    lock_file = "//:android_ide_common_30_1_3_maven_install.json",
     use_starlark_android_rules = True,
 )
 use_repo(maven, "android_ide_common_30_1_3")
@@ -157,7 +166,7 @@ maven.install(
     ],
     # To generate, run:
     # REPIN=1 bazelisk run --enable_bzlmod @rules_android_maven//:pin
-    # lock_file = "//:rules_android_maven_install.json",
+    lock_file = "//:rules_android_maven_install.json",
     use_starlark_android_rules = True,
 )
 use_repo(
