@@ -113,10 +113,10 @@ use_repo(maven, "android_ide_common_30_1_3")
 # Pin @bazel_worker_java's maven repository so Coursier does not need to run at fetch time.
 maven.install(
     name = "bazel_worker_maven",
-    known_contributing_modules = [
-        "bazel_worker_java",
-        "rules_android",
-    ],
+    # known_contributing_modules = [
+    #     "bazel_worker_java",
+    #     "rules_android",
+    # ],
     # To generate, run:
     # REPIN=1 bazelisk run --enable_bzlmod @bazel_worker_maven//:pin
     lock_file = "//:bazel_worker_maven_install.json",
